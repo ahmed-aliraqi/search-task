@@ -18,9 +18,9 @@ class SearchController extends Controller
      */
     public function search(SearchRequest $request)
     {
-        $service = GithubFactory::make($request->type);
+        $github = GithubFactory::make($request->type);
 
-        return $service
+        return $github
             ->search($request->text)
             ->response(new JsonResponse);
     }
