@@ -1,61 +1,92 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Github Search Api Task
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+### Task Description
+> Write an "Search" Backend API endpoint which eventually collect the data from Github & stores it in REDIS.
+ >
+ > Create two API Endpoints:
+ >
+ > "/api/search"
+ > Receives a POST request with search type(users or repositories or issues) & search text(mandatory).
+ > The results will be fetched from the GitHub API & cache it for atleast 2 hours.
+ > GitHub Search API Docs
+ > "/api/clear-cache" : Clear Backend Caching
 
-## About Laravel
+### Design Patterns
+> Three design patterns were used in this task:
+- Template Method
+- Strategy
+- Factory
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Usage
+> You can use search service and cache results from controller:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```php
+use App\Support\Response\JsonResponse;
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+$github = GithubFactory::make('users');
 
-## Learning Laravel
+return $github
+    ->search('ahmed-aliraqi')
+    ->response(new JsonResponse);
+```
+> By default the search results will be cached, if you want to disable response caching you should use `withoutCaching()` method:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```php
+use App\Support\Response\JsonResponse;
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+$github = GithubFactory::make('users');
 
-## Laravel Sponsors
+return $github
+    ->search('ahmed-aliraqi')
+    ->withoutCaching()
+    ->response(new JsonResponse);
+```
+> The `GithubServices` support 3 types `users`, `repositories` and `issues`.
+> The type instances was mapped in the `search` config file:
+```php
+<?php
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+return [
+    /*
+    | Mapping the github search types.
+    | Should be implements "GithubService" interface.
+    |
+    */
+    'types-mapping' => [
+        'users' => App\Support\Github\GithubUsers::class,
+        'issues' => App\Support\Github\GithubIssues::class,
+        'repositories' => App\Support\Github\GithubRepositories::class,
+    ],
+];
+``` 
+> You can specified the `lifetime` of the cache in specific service by overriding `getLifetime()` method. By default the `lifetime` value is 2 hours.
+```php
+<?php
 
-### Premium Partners
+namespace App\Support\Github;
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+class GithubUsers extends GithubServices
+{
+    /**
+     * The type of search service.
+     * supported values: "users", "issues", "repositories"
+     *
+     * @return string
+     */
+    function getSearchType()
+    {
+        return 'users';
+    }
 
-## Contributing
+    /**
+     * The cache expiration time.
+     *
+     * @return \Carbon\Carbon
+     */
+    protected function getLifetime()
+    {
+        return now()->addDay();
+    }
+}
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

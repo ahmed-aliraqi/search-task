@@ -17,6 +17,6 @@ class GithubFactory
 
         $service = config('search.types-mapping.'.$type);
 
-        return new $service;
+        return app($service);
     }
 }

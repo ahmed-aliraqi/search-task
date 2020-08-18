@@ -7,8 +7,8 @@ return [
     |
     */
     'types-mapping' => [
-        'users' => \App\Support\Github\GithubUsers::class,
-        'issues' => \App\Support\Github\GithubIssues::class,
-        'repositories' => \App\Support\Github\GithubRepositories::class,
+        'users' => App\Support\Github\GithubUsers::class,
+        'issues' => App\Support\Github\GithubIssues::class,
+        'repositories' => App\Support\Github\GithubRepositories::class,
     ],
 ];

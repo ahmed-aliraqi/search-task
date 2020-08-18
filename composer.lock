@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "456dbdcb64e2216b2d528f6f9bb43282",
+    "content-hash": "43e3b7d4021225a93ebb74aa6eeea6ce",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -595,6 +595,62 @@
                 }
             ],
             "time": "2020-05-31T07:30:16+00:00"
+        },
+        {
+            "name": "goldspecdigital/oooas",
+            "version": "v2.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/goldspecdigital/oooas.git",
+                "reference": "5e5e58a561265a1974f34de9020f1297b469d0b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/goldspecdigital/oooas/zipball/5e5e58a561265a1974f34de9020f1297b469d0b3",
+                "reference": "5e5e58a561265a1974f34de9020f1297b469d0b3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.15",
+                "justinrainbow/json-schema": "^5.2",
+                "phpunit/phpunit": "^7.3"
+            },
+            "suggest": {
+                "justinrainbow/json-schema": "Required to perform validation (^5.2)"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GoldSpecDigital\\ObjectOrientedOAS\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthew Inamdar",
+                    "email": "matt@goldspecdigital.com"
+                },
+                {
+                    "name": "Vladimir Yuldashev",
+                    "email": "vladimir.yuldashev@gmail.com"
+                }
+            ],
+            "description": "An object oriented approach to generating OpenAPI specs, implemented in PHP.",
+            "homepage": "https://github.com/goldspecdigital/oooas",
+            "keywords": [
+                "oas",
+                "openapi",
+                "php",
+                "swagger"
+            ],
+            "time": "2020-04-07T11:18:35+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
