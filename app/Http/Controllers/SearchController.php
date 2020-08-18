@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Support\Github\Github;
+use App\Support\Github\GithubFactory;
 use App\Http\Requests\SearchRequest;
 use Illuminate\Support\Facades\Cache;
 use App\Support\Response\JsonResponse;
@@ -18,11 +18,11 @@ class SearchController extends Controller
      */
     public function search(SearchRequest $request)
     {
-        $service = Github::make($request->type);
+        $service = GithubFactory::make($request->type);
 
-        $results = $service->search($request->text);
-
-        return (new JsonResponse($results))->render();
+        return $service
+            ->search($request->text)
+            ->response(new JsonResponse);
     }
 
     /**

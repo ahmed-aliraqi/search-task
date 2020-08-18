@@ -2,12 +2,12 @@
 
 namespace App\Support\Github;
 
-class Github
+class GithubFactory
 {
     /**
      * @param $type
      * @throws \Exception
-     * @return \App\Support\Github\GithubService
+     * @return \App\Support\Github\GithubServices
      */
     public static function make($type)
     {

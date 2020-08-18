@@ -5,16 +5,10 @@ namespace App\Support\Response;
 interface Response
 {
     /**
-     * Response constructor.
-     *
-     * @param array $data
-     */
-    public function __construct(array $data = []);
-
-    /**
      * Render the response data.
      *
-     * @return mixed
+     * @param array $data
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function render();
+    public function render(array $data = []);
 }

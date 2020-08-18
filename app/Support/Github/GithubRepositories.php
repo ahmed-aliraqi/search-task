@@ -2,18 +2,16 @@
 
 namespace App\Support\Github;
 
-use Illuminate\Support\Facades\Http;
-
-class GithubRepositories implements GithubService
+class GithubRepositories extends GithubServices
 {
     /**
-     * @param string $text
-     * @return array
+     * The type of search service.
+     * supported values: "users", "issues", "repositories"
+     *
+     * @return string
      */
-    public function search($text = '')
+    function getSearchType()
     {
-        $response = Http::get('https://api.github.com/search/repositories?q='.$text);
-
-        return $response->json();
+        return 'repositories';
     }
 }
