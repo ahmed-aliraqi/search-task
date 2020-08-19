@@ -9,14 +9,15 @@ $info = Info::create()
     ->version('v1')
     ->description('Github Search API documentation');
 
-[$users] = require 'search.php';
+[$search, $clearCache] = require 'search.php';
 
 // Create the main OpenAPI object composed off everything created above.
 $openApi = OpenApi::create()
     ->openapi(OpenApi::OPENAPI_3_0_2)
     ->info($info)
     ->paths(
-        $users
+        $search,
+        $clearCache
     );
 
 return $openApi;
