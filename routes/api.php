@@ -18,5 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('search', 'SearchController@search');
-Route::get('search/clear', 'SearchController@clearCache');
+Route::get('documentation', 'DocumentationController@index');
+Route::post('search', 'SearchController@search');
+Route::post('clear-cache', 'SearchController@clearCache');
