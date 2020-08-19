@@ -22,7 +22,6 @@ class SearchController extends Controller
 
         return $github
             ->search($request->text)
-            ->withoutCaching()
             ->response(new JsonResponse);
     }
 
