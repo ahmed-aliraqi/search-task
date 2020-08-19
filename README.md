@@ -11,6 +11,9 @@
  > GitHub Search API Docs
  > "/api/clear-cache" : Clear Backend Caching
 
+### Swagger Documentation Endpoint
+- /api/documentation
+
 ### Design Patterns
 > Three design patterns were used in this task:
 - Template Method
